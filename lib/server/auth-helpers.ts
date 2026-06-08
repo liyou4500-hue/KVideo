@@ -82,7 +82,13 @@ function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
 }
 
 async function importPbkdf2Key(password: string): Promise<CryptoKey> {
-  return crypto.subtle.importKey('raw', toArrayBuffer(encodeText(password)), 'PBKDF2', false, ['deriveBits']);
+  return crypto.subtle.importKey(
+    'raw',
+    toArrayBuffer(encodeText(password)),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveBits']
+  );
 }
 
 async function importHmacKey(secret: string): Promise<CryptoKey> {
