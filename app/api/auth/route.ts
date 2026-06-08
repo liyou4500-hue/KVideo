@@ -8,6 +8,14 @@ import {
 
 export const runtime = 'edge';
 
+function getSafeErrorName(error: unknown): string {
+  if (error instanceof Error) {
+    return error.name || 'Error';
+  }
+
+  return typeof error;
+}
+
 export async function GET() {
   return NextResponse.json(await getPublicAuthConfig());
 }
@@ -32,7 +40,9 @@ export async function POST(request: NextRequest) {
     }
 
     return createLoginResponse(session);
-  } catch {
-    return NextResponse.json({ valid: false, message: 'Invalid request' }, { status: 400 });
+  } catch (error) {
+    const errorName = getSafeErrorName(error);
+    console.error('[auth] login failed', errorName);
+    return NextResponse.json({ valid: false, message: 'Invalid request', error: errorName }, { status: 400 });
   }
 }
