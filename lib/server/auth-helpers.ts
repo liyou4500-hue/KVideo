@@ -36,7 +36,7 @@ export interface SessionPayload {
   iat: number;
 }
 
-const PBKDF2_ITERATIONS = 120_000;
+const PBKDF2_ITERATIONS = 100_000;
 const PBKDF2_KEY_BYTES = 32;
 const SESSION_TOKEN_VERSION = 'v1';
 
