@@ -10,7 +10,7 @@ export const runtime = 'edge';
 
 function getSafeErrorName(error: unknown): string {
   if (error instanceof Error) {
-    return error.name || 'Error';
+    return `${error.name || 'Error'}: ${error.message || 'No message'}`;
   }
 
   return typeof error;
